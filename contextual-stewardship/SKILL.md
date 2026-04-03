@@ -1,6 +1,6 @@
 ---
 name: contextual-stewardship
-description: Use this skill when the user makes a technical decision, establishes a new pattern, defines business rules, or explicitly asks to remember or save a guideline. Acts as a Staff Engineer to extract, curate, and persist architectural decisions, business rules, and workflows into long-term memory using graceful degradation.
+description: Use this skill when the user makes a technical decision, establishes a new pattern, defines business rules, or explicitly asks to remember or save a guideline. Also use this skill when you are about to implement a feature, write code, plan an architecture, or make a technical decision - you MUST retrieve contextual memory first to follow established patterns. Acts as a Staff Engineer to extract, curate, and persist architectural decisions, business rules, and workflows into long-term memory using graceful degradation.
 ---
 
 # Contextual Stewardship Skill
@@ -14,6 +14,24 @@ Ignore casual conversation or temporary debugging steps. Focus ONLY on:
 1. **arquitetura**: Tech stack choices, design patterns, ORM preferences, library decisions.
 2. **negocio**: Product rules, target audience, domain logic, business constraints.
 3. **fluxo_trabalho**: Git patterns, testing rules, naming conventions, team processes.
+
+## Retrieval Strategy (Pre-flight Check)
+
+BEFORE you implement a feature, write code, plan an architecture, or make a technical decision, you MUST retrieve contextual memory first to ensure you follow established patterns.
+
+### Tier 1 (MCP Context)
+Check your available tools. If you have a memory or retrieval tool provided by an MCP Server (e.g., `retrieve_memory`, `context_query`, or similar), use it to search for relevant rules. You are done.
+
+### Tier 2 (TOON Fallback)
+If no MCP retrieval tool is available, execute the orchestrator script to search the local TOON file.
+
+Execute this command exactly:
+
+```bash
+node contextual-stewardship/scripts/orchestrator.js retrieve <query>
+```
+
+Where `<query>` is a domain name (`arquitetura`, `negocio`, or `fluxo_trabalho`) or keywords to search for.
 
 ## Persistence Strategy (Graceful Degradation)
 
@@ -39,6 +57,15 @@ When you identify a new rule that must be saved, you MUST follow this execution 
 
 ## Confirmation Message
 
+### For Retrieval Operations
+When you retrieve contextual memory, display a summary to the user showing the matched rules grouped by domain. Include which retrieval mechanism was used.
+
+Example confirmations:
+
+- "Retrieved 2 rules from `arquitetura` domain via MCP Context."
+- "Retrieved context from `stewardship.toon` - Found 3 rules in `fluxo_trabalho`."
+
+### For Persistence Operations
 When a decision is successfully persisted, display a confirmation message to the user:
 
 - Include the domain where the rule was stored (arquitetura, negocio, or fluxo_trabalho)
