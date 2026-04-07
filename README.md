@@ -14,7 +14,9 @@ These skills are compatible with tools like [Claude Code](https://claude.ai/code
 |-------|-------------|
 | [admin-ui-svelte](./admin-ui-svelte) | Build modern admin dashboards with Tailwind CSS v4, Skeleton UI, and Svelte 5. Covers layouts, tables, forms, navigation, auth pages, and responsive design patterns. |
 | [bootstrap-5](./bootstrap-5) | Build modern, responsive, accessible web interfaces using pure Bootstrap 5. Covers grid system, flexbox utilities, spacing, colors, typography, forms, buttons, cards, modals, navbars, and more. |
-| [sequential-thinking](./sequential-thinking) | Structured reasoning for complex problems. Use for multi-step reasoning, architectural decisions, debugging unclear root causes, or tasks where problem scope is uncertain. |
+| [contextual-stewardship](./contextual-stewardship) | Extract, curate, and persist architectural decisions, business rules, and workflows into long-term memory using graceful degradation (MCP Context → local TOON file). |
+| [long-running-work-planning](./long-running-work-planning) | Break down ambiguous problems, explore alternatives, and maintain work continuity across extended tasks with structured incremental reasoning. |
+| [quality-grading](./quality-grading) | Grade code, specifications, or design documents across four quality dimensions with a 1-5 scoring scale and auto-improvement for artifacts below threshold. |
 
 ## Installation
 
@@ -22,7 +24,7 @@ Copy the skill folder to your project or skills directory:
 
 ```bash
 # Clone or download this repository
-git clone https://github.com/yourusername/my-agent-skills.git
+git clone https://github.com/lindoelio/my-agent-skills.git
 
 # Copy a skill to your project
 cp -r my-agent-skills/admin-ui-svelte ./skills/
