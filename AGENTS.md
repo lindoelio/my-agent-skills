@@ -6,13 +6,13 @@ This repository contains reusable [Agent Skills](https://agentskills.io) for AI-
 
 ```
 /
-├── SKILL_NAME/           # Each skill is a directory
-│   ├── SKILL.md          # Required: Main skill file with frontmatter + instructions
-│   ├── references/       # Optional: Additional documentation loaded on demand
-│   ├── scripts/          # Optional: Executable code for the agent
-│   └── assets/           # Optional: Templates and static resources
-├── README.md             # Repository overview
-└── AGENTS.md             # This file - guidelines for contributors
+├── SKILL_NAME/              # Each skill is a directory
+│   ├── SKILL.md             # Required: Main skill file with frontmatter + instructions
+│   ├── references/          # Optional: Additional documentation loaded on demand
+│   ├── scripts/             # Optional: Executable code for the agent
+│   └── assets/              # Optional: Templates and static resources
+├── README.md                # Repository overview
+└── AGENTS.md                # This file - guidelines for contributors
 ```
 
 ## Commands
@@ -30,10 +30,10 @@ skills-ref validate ./admin-ui-svelte
 skills-ref validate ./*/SKILL.md
 ```
 
-### Run Markdown Linter
+### Markdown Linting
 
 ```bash
-# Using markdownlint-cli (if installed)
+# Run markdownlint-cli (if installed)
 npx markdownlint-cli "**/*.md"
 
 # Fix auto-fixable issues
@@ -43,18 +43,16 @@ npx markdownlint-cli "**/*.md" --fix
 ### Git Workflow
 
 ```bash
-# Check for issues before committing
+# Check status before committing
 git status
 git diff
 
-# Commit with descriptive message
+# Commit with descriptive message (conventional commits)
 git add .
 git commit -m "feat: add new skill for X"
 ```
 
-## Skill Creation Guidelines
-
-### SKILL.md Structure
+## SKILL.md Structure
 
 Every skill must have a `SKILL.md` with YAML frontmatter:
 
@@ -75,49 +73,44 @@ allowed-tools: Bash(git:*)    # Optional: pre-approved tools
 Instructions for the agent here.
 ```
 
-### Naming Conventions
+## Naming Conventions
 
-- **Skill names**: lowercase letters, numbers, hyphens only (e.g., `admin-ui-svelte`)
-- **Must match directory name**: If folder is `admin-ui-svelte/`, name field must be `admin-ui-svelte`
-- **No consecutive hyphens**: `my--skill` is invalid
-- **Cannot start/end with hyphen**: `-skill` and `skill-` are invalid
+| Element | Rule | Example |
+|---------|------|---------|
+| Skill names | lowercase, numbers, hyphens only | `admin-ui-svelte` |
+| Directory | Must match `name` field | `admin-ui-svelte/SKILL.md` |
+| No consecutive hyphens | `my--skill` is invalid | - |
+| No leading/trailing hyphens | `-skill` and `skill-` are invalid | - |
 
-### Description Best Practices
+## YAML Frontmatter
 
-1. Use imperative phrasing: "Use this skill when..." not "This skill does..."
-2. Include trigger contexts: specific task types, user intent, implicit scenarios
-3. Add escape clauses: "even if the user doesn't explicitly mention X"
-4. Stay under 1024 characters
+- Quote string values with special characters
+- Use 2-space indentation consistently
+- Field order: `name`, `description`, `license`, `compatibility`, `metadata`, `allowed-tools`
+- The `name` field MUST match the directory name exactly
+- Keep `description` under 1024 characters
 
-### File Organization
+## Markdown Style
 
-- **SKILL.md**: Core instructions (< 500 lines, < 5000 tokens recommended)
-- **references/**: Detailed documentation loaded on demand
-- **scripts/**: Executable code (Python, Bash, JavaScript)
-- **assets/**: Templates, schemas, static files
+### Headers
 
-### Reference File Guidelines
+- Use ATX-style headers (`# ## ###`)
+- One H1 per file (the skill title)
+- Logical hierarchy: H1 → H2 → H3 → H4 (no skipping levels)
+- No header text styling (no bold/italic in headers)
 
-- Keep files focused on a single topic
-- Use descriptive names: `installation.md`, `api-errors.md`
-- Tell the agent when to load: "Read `references/api-errors.md` if the API returns errors"
-- Reference files from SKILL.md, not from other reference files
-
-## Code Style
-
-### Markdown Formatting
-
-```markdown
-# Use ATX-style headers (# ## ###)
-
-## Sections
+### Lists
 
 - Use hyphens for unordered lists
 - Indent nested items with 2 spaces
+- Keep list items concise; complex content belongs in paragraphs or code blocks
+- Use blank lines to separate related lists from paragraphs
 
 ### Code Blocks
 
-Specify language for syntax highlighting:
+- Always specify language for syntax highlighting
+- Use fenced code blocks (triple backticks), never indented code
+- Keep code examples short and focused (extract long examples to reference files)
 
 ```svelte
 <script>
@@ -125,34 +118,65 @@ Specify language for syntax highlighting:
 </script>
 ```
 
-### Use fenced code blocks, not indented
-```
+### Links
 
-### YAML Frontmatter
+- Use relative paths for internal references: `[Installation](references/installation.md)`
+- Use descriptive link text (not "click here")
 
-- Quote string values with special characters
-- Use consistent indentation (2 spaces)
-- Order fields: name, description, license, compatibility, metadata, allowed-tools
+## Content Guidelines
 
-### Skill Content
-
-1. **Gotchas section**: High-value, add near the top
+1. **Gotchas section** (recommended near top): High-value warnings and common mistakes
 2. **Quick start**: Working example within first 50 lines
-3. **Progressive disclosure**: Core instructions in SKILL.md, details in references/
+3. **Progressive disclosure**: Core instructions in SKILL.md, details in `references/`
 4. **No redundancy**: Skip what agents already know (e.g., "what is a PDF")
+5. **No comments in code examples**: Omit explanatory comments unless critical
+
+## Reference Files
+
+- Keep files focused on a single topic
+- Use descriptive names: `installation.md`, `api-errors.md`
+- Tell agents when to load: "Read `references/api-errors.md` if the API returns errors"
+- Reference files from SKILL.md, not from other reference files
+- All paths in reference files must be relative
+
+## File Organization
+
+| File | Recommendation |
+|------|----------------|
+| SKILL.md | < 500 lines, < 5000 tokens |
+| references/*.md | < 1000 lines each |
+| scripts/* | Executable: Python, Bash, JavaScript |
+| assets/* | Templates, schemas, static files |
 
 ## Validation Checklist
 
 Before submitting a new skill:
 
 - [ ] SKILL.md exists with valid YAML frontmatter
-- [ ] `name` matches directory name
+- [ ] `name` matches directory name exactly
 - [ ] `description` is under 1024 characters
-- [ ] `name` is lowercase with hyphens only
+- [ ] `name` is lowercase with hyphens only, no consecutive/leading/trailing hyphens
 - [ ] SKILL.md is under 500 lines
-- [ ] Markdown syntax is valid
+- [ ] Markdown syntax is valid (headers, lists, code blocks, links)
 - [ ] Reference files are in `references/` directory
-- [ ] File paths in references are relative
+- [ ] All paths in references are relative
+- [ ] No dead links
+
+## Description Best Practices
+
+1. Use imperative phrasing: "Use this skill when..." not "This skill does..."
+2. Include trigger contexts: specific task types, user intent, implicit scenarios
+3. Add escape clauses: "even if the user doesn't explicitly mention X"
+4. Mention specific technologies/patterns covered
+
+## Error Handling in Scripts
+
+When writing executable scripts:
+
+- Exit with code 0 on success, non-zero on failure
+- Print meaningful error messages to stderr
+- Handle missing dependencies gracefully with clear instructions
+- Use `set -e` for bash scripts to fail on first error
 
 ## Resources
 
