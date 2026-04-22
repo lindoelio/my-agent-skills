@@ -1,0 +1,47 @@
+{
+  "skill_name": "postgres-database-designer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Design a database schema for an e-commerce platform with users, products, orders, and order items. Users should have email and name. Products have name, price, and stock quantity. Orders belong to users and have a status (pending/confirmed/shipped/delivered/cancelled). Order items link orders to products with quantity. Generate the SQL migrations.",
+      "expected_output": "SQL migrations with proper tables, foreign keys, constraints, and indexes following PostgreSQL best practices",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need to design a multi-tenant SaaS application where each company (tenant) can have multiple users. Users belong to exactly one tenant. I need to implement row-level security so users can only see their own tenant's data. Give me the schema design and SQL.",
+      "expected_output": "Schema with tenant isolation, RLS policies, proper foreign keys, and security considerations",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Create a database design for a blog platform with posts, categories, tags, and comments. Posts can have multiple tags and belong to one category. Comments belong to posts and can have nested replies. Include author information and timestamps. Generate full documentation and SQL.",
+      "expected_output": "ERD, normalized schema, SQL migrations with proper relationships (including self-referencing for nested comments)",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Design a database for an IoT sensor monitoring system. Sensors send readings (temperature, humidity, pressure) every 30 seconds. There are thousands of sensors generating millions of rows per day. I need efficient querying for dashboards and analytics. Design for high insert throughput and efficient time-range queries.",
+      "expected_output": "Schema with range partitioning by time, proper indexes for time-series queries, and optimized for high write throughput",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Create a job board database where employers post jobs and job seekers can search them. Jobs have title, description (long text), requirements, salary range, location. I need fast full-text search on title and description. Include job applications where seekers apply to jobs.",
+      "expected_output": "Schema with full-text search using tsvector, GIN indexes, and proper many-to-many relationships for applications",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "Design a financial transactions database where every change to an account balance must be tracked immutably. Transactions include id, account_id, amount, type (credit/debit), description, created_at. I need to prevent any UPDATE or DELETE operations while allowing fast inserts and audit queries.",
+      "expected_output": "Schema with audit trail pattern, immutability enforced at database level, and efficient append-only insert patterns",
+      "files": []
+    },
+    {
+      "id": 7,
+      "prompt": "Design a user management system with soft deletes. Users can be deactivated (deleted_at timestamp set) but not physically removed. When querying users, only active users appear by default. Include a way to query both active and inactive users. Users have roles (admin, member, guest).",
+      "expected_output": "Schema with deleted_at pattern, partial indexes for active-only queries, and role-based access patterns",
+      "files": []
+    }
+  ]
+}
