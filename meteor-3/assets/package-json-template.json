@@ -1,0 +1,35 @@
+/**
+ * package.json template for a Meteor 3.5 app.
+ * Copy this to package.json and customize.
+ */
+{
+  "name": "my-meteor-app",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "start:dev": "meteor run --settings settings/development.json",
+    "test": "meteor test --once --driver-package meteortesting:mocha",
+    "test:watch": "TEST_WATCH=1 meteor test --driver-package meteortesting:mocha --port 3100",
+    "test:app": "meteor test --full-app --once --driver-package meteortesting:mocha",
+    "test:ci": "meteor test --once --driver-package meteortesting:mocha --port 3100",
+    "lint": "eslint .",
+    "build": "meteor build ../build --architecture os.linux.x86_64"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.24.0",
+    "meteor-node-stubs": "^1.2.1"
+  },
+  "devDependencies": {
+    "chai": "^4.4.1",
+    "@faker-js/faker": "^8.4.1"
+  },
+  "meteor": {
+    "mainModule": {
+      "client": "client/main.js",
+      "server": "server/main.js"
+    },
+    "nodeModules": {
+      "recompile": {}
+    }
+  }
+}

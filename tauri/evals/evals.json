@@ -1,0 +1,17 @@
+{
+  "skill_name": "tauri",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a new Tauri V2 application and add the file system plugin to read a text file. Show me the exact Rust code, capability configuration, and frontend code required.",
+      "expected_output": "The agent correctly utilizes the new V2 plugin architecture, adding the tauri-plugin-fs crate, initializing it in Builder, configuring capabilities, and importing invoke from @tauri-apps/api/core.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "How do I build my Tauri V2 app for Android?",
+      "expected_output": "Agent lists the correct V2 mobile commands (`tauri android init`, `tauri android dev`, `tauri android build`) and mentions Android Studio prerequisites.",
+      "files": []
+    }
+  ]
+}
