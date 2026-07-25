@@ -3,26 +3,42 @@
 ## `meteor create`
 
 ```bash
+# Without args: interactive wizard
+meteor create
+
+# Application types
 meteor create <app-name>                    # React + MongoDB (default)
+meteor create <app-name> --react            # React (same as default)
 meteor create <app-name> --blaze            # Blaze + MongoDB
 meteor create <app-name> --vue              # Vue 3 + Rspack
 meteor create <app-name> --svelte           # Svelte + Rspack
 meteor create <app-name> --solid            # Solid + Rspack
 meteor create <app-name> --typescript       # React + TypeScript
-meteor create <app-name> --react            # React (same as default)
-meteor create <app-name> --apollo           # React + Apollo GraphQL
+meteor create <app-name> --typescript-tailwind  # React + TypeScript + Tailwind
 meteor create <app-name> --tailwind         # React + Tailwind CSS
 meteor create <app-name> --chakra-ui        # React + Chakra UI
+meteor create <app-name> --apollo           # React + Apollo GraphQL
 meteor create <app-name> --angular          # Angular + Rspack (experimental)
 meteor create <app-name> --babel            # Babel instead of SWC
+meteor create <app-name> --coffeescript     # CoffeeScript
+
+# Project structure
 meteor create <app-name> --bare             # Empty Blaze (minimal)
 meteor create <app-name> --full             # Full imports-based structure
 meteor create <app-name> --minimal          # Minimal packages
 meteor create <app-name> --prototype        # With autopublish + insecure
+
+# From templates
 meteor create <app-name> --release 3.5      # Specific Meteor version
 meteor create <app-name> --from <url>       # From GitHub/GitLab/Bitbucket template
 meteor create <app-name> --from-branch <b>  # From specific branch
 meteor create <app-name> --from-dir <path>  # From local template directory
+
+# From community examples
+meteor create <app-name> --example <slug>   # Create from community example
+meteor create --list                        # List available examples
+
+# Package
 meteor create --package <username:name>     # New package
 ```
 
@@ -37,10 +53,21 @@ meteor run --production                    # Production mode (DON'T use for real
 meteor run --release 3.5                   # Specific release
 meteor run --settings settings/dev.json    # With settings
 meteor run --extra-packages bundle-visualizer --production  # Temp package
+meteor run --verbose                       # Print all build output
+meteor run --no-lint                       # Skip linters on rebuild
+meteor run --no-release-check              # Skip release update check
+meteor run --raw-logs                      # Run without parsing logs
+meteor run --exclude-archs web.browser.legacy,web.cordova  # Skip architectures
+meteor run --allow-incompatible-update     # Allow incompatible package versions
+meteor run --mobile-server <url>           # Mobile build server URL
+meteor run --cordova-server-port <port>    # Cordova content port
 
 # Debug
+meteor run --inspect                       # Enable server-side debugging
+meteor run --inspect-brk                   # Debug + pause at startup
 SERVER_NODE_OPTIONS=--inspect meteor run
 SERVER_NODE_OPTIONS=--inspect-brk meteor run
+SERVER_NODE_OPTIONS='--max-old-space-size=4096 --inspect' meteor run
 
 # Migration helper
 WARN_WHEN_USING_OLD_API=true meteor run
@@ -69,6 +96,28 @@ Generates in `imports/api/<name>/`:
 
 Auto-detects TypeScript if `tsconfig.json` exists.
 
+> **Prefer `meteor generate` over custom scaffold scripts** for basic CRUD modules. It produces idiomatic Meteor 3 async code (exported async functions + `Meteor.methods` wrapper). Use the skill's `scaffold-*.sh` scripts only when you need features `meteor generate` doesn't provide: `--with-schema`, `--with-tests`, React/Blaze components, migrations, or settings files.
+
+## `meteor profile`
+
+Profile build and bundle performance (Meteor 3.2+):
+
+```bash
+meteor profile                             # Monitor build + bundle
+meteor profile --size                      # Monitor bundle runtime + size
+meteor profile --size-only                 # Monitor bundle size only
+meteor profile --build                     # Monitor build time
+METEOR_IDLE_TIMEOUT=120 meteor profile     # Custom timeout (default 90s)
+```
+
+## `meteor debug`
+
+Run with server suspended for debugging (deprecated — prefer `--inspect`):
+
+```bash
+meteor debug [--debug-port <port>]         # Default port 5858
+```
+
 ## `meteor build`
 
 ```bash
@@ -90,11 +139,13 @@ meteor deploy <site> --settings settings/prod.json
 meteor deploy <site> --debug
 meteor deploy <site> --free                 # Free tier
 meteor deploy <site> --mongo                # Galaxy shared MongoDB
-meteor deploy <site> --plan professional
+meteor deploy <site> --plan professional    # professional, essentials, or free
 meteor deploy <site> --plan professional --container-size standard
 meteor deploy <site> --cache-build          # Keep bundle for redeploy
 meteor deploy <site> --delete               # Delete app
 meteor deploy <site> --owner <org>
+meteor deploy <site> --deploy-polling-timeout <ms>  # Wait time (default 15 min)
+meteor deploy <site> --no-wait              # Exit after upload, don't wait for deploy
 ```
 
 ## Package Management
@@ -141,6 +192,8 @@ meteor test --driver-package meteortesting:mocha
 meteor test --full-app --driver-package meteortesting:mocha
 meteor test --once --driver-package meteortesting:mocha
 meteor test --driver-package meteortesting:mocha --port 3100
+meteor test --inspect                       # Debug tests
+meteor test --inspect-brk                   # Debug tests + pause at startup
 meteor test-packages                         # All local packages
 meteor test-packages ./packages/<name>       # Specific package
 ```
@@ -168,10 +221,19 @@ meteor lint                                  # Run all linters
 meteor shell                                 # Interactive server shell
 meteor npm <command>                         # Bundled npm
 meteor node <command>                        # Bundled node
-meteor login
-meteor logout
-meteor whoami
-meteor admin
+meteor login                                 # Log in to Meteor developer account
+meteor login --email                         # Log in by email address
+meteor logout                                # Log out
+meteor whoami                                # Show logged-in username
+meteor admin                                 # Administrative commands
+```
+
+### `METEOR_SESSION_FILE`
+
+Set before `meteor login` to generate a session token file for CI/CD:
+
+```bash
+METEOR_SESSION_FILE=token.json meteor login
 ```
 
 ## `meteor shell`

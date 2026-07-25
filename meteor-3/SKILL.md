@@ -71,9 +71,24 @@ Create a full imports-based structure (recommended for real apps):
 meteor create myapp --full
 ```
 
+Scaffold a CRUD module in an existing project:
+
+```bash
+meteor generate tasks          # collection + methods + publications + index
+meteor generate tasks --path=server/admin  # custom path
+```
+
 ## Scaffold Scripts (token-efficient code generation)
 
 This skill bundles scripts that generate consistent, idiomatic Meteor 3 code. **Always prefer these scripts over hand-writing boilerplate** — they produce correct async patterns, naming conventions, and file structure without burning LLM tokens on repetitive code.
+
+**When to use `meteor generate` vs skill scripts:**
+
+- **`meteor generate <name>`** (built-in CLI): Use for basic CRUD modules. Produces idiomatic Meteor 3 async code (exported async functions + `Meteor.methods` wrapper). Fastest, no script dependency.
+- **`scaffold-module.sh`**: Use when you need `--with-schema` (simpl-schema), `--with-tests`, or a custom `--path`.
+- **`scaffold-method.sh` / `scaffold-publication.sh`**: Use to add individual methods/publications to existing modules.
+- **`scaffold-react-component.sh` / `scaffold-blaze-template.sh`**: Use for UI components (not covered by `meteor generate`).
+- **`scaffold-migration.sh` / `scaffold-settings.sh`**: Use for migrations and settings (not covered by `meteor generate`).
 
 Run scripts from the project root (where `.meteor/` lives).
 
@@ -147,11 +162,11 @@ bash scripts/check-async.sh
 # Outputs a report of lines that need migration to *Async variants
 ```
 
-## Navigating the Skill
+## Reference Files (must read before coding)
 
-Read these reference files based on the task:
+**Before writing any code for a task, you MUST read the corresponding reference file.** These files contain detailed API signatures, edge cases, and security patterns that are not repeated in this main skill file. Skipping them will produce incorrect or insecure code.
 
-| Task | Reference file |
+| Task | You must read |
 |------|---------------|
 | Async API mapping (v2 → v3), migration patterns | `references/async-api-map.md` |
 | Collections, schemas, indexes, denormalization, collation | `references/collections.md` |
